@@ -3,7 +3,7 @@ import numpy as np
 
 
 from phidl import Device, Layer, LayerSet, make_device
-from phidl import quickplot as qp # Rename "quickplot()" to the easier "qp()"
+from phidl import quickplot2 as qp # Rename "quickplot()" to the easier "qp()"
 import phidl.geometry as pg
 import phidl.routing as pr
 import phidl.utilities as pu
