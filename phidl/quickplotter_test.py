@@ -128,13 +128,14 @@ def line_select_callback(eclick, erelease):
     x1, y1 = eclick.xdata, eclick.ydata
     x2, y2 = erelease.xdata, erelease.ydata
 
-    rect = plt.Rectangle( (min(x1,x2),min(y1,y2)), np.abs(x1-x2), np.abs(y1-y2) )
-    ax.add_patch(rect)
+#    rect = plt.Rectangle( (min(x1,x2),min(y1,y2)), np.abs(x1-x2), np.abs(y1-y2) )
+#    ax.add_patch(rect)
 
 
 rs = RectangleSelector(ax, line_select_callback,
-                       drawtype='box', useblit=False, button=[1], 
+                       drawtype='box', useblit=True,
+                       button=[3],  # Right-click
                        minspanx=5, minspany=5, spancoords='pixels', 
-                       interactive=True)
+                       interactive=False)
 
 plt.show()
