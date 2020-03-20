@@ -137,6 +137,7 @@ def _draw_polygons(polygons, ax, quickdraw = False, **kwargs):
     http://exnumerus.blogspot.com/2011/02/how-to-quickly-plot-polygons-in.html
     """
     coll = PolyCollection(polygons, **kwargs)
+    # coll.set_antialiased(False)
     ax.add_collection(coll)
     stacked_polygons = np.vstack(polygons)
     xmin,ymin = np.min(stacked_polygons, axis = 0)
@@ -299,7 +300,15 @@ class Viewer(QGraphicsView):
         qcolor.setNamedColor(color)
         qcolor.setAlphaF(alpha)
         for points in polygons:
-            qpoly = QPolygonF( [QPointF(p[0], p[1]) for p in points] )
+            # qpoly = QPolygonF( [QPointF(p[0], p[1]) for p in points] )
+            n = len(points)
+            qpoly = QPolygonF(n)
+            vptr = qpoly.data()
+            vptr.setsize(8*2*n)
+            qpoly_direct_array = np.ndarray( shape=(n,2), dtype=np.float64, buffer=memoryview(vptr))
+            qpoly_direct_array.setflags(write=True)
+            qpoly_direct_array[:] = points
+
             scene_poly = self.scene.addPolygon(qpoly)
             scene_poly.setBrush(qcolor)
             scene_poly.setPen(self.pen)
